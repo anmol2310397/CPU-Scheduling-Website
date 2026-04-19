@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduling Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CPU Scheduling Simulator</h1>
+            <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+                <span class="sun-icon"> Sun</span>
+                <span class="moon-icon"> Moon</span>
+            </button>
+        </header>
+
+        <main>
+            <!-- Process Input Section -->
+            <section class="input-section">
+                <h2>Add Process</h2>
+                <form id="processForm" class="process-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="processId">Process ID *</label>
+                            <input type="text" id="processId" name="processId" required placeholder="P1">
+                        </div>
+                        <div class="form-group">
+                            <label for="arrivalTime">Arrival Time *</label>
+                            <input type="number" id="arrivalTime" name="arrivalTime" required min="0" placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="burstTime">Burst Time *</label>
+                            <input type="number" id="burstTime" name="burstTime" required min="1" placeholder="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Priority (optional)</label>
+                            <input type="number" id="priority" name="priority" min="1" placeholder="1">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Process</button>
+                </form>
+            </section>
+
+            <!-- Algorithm Selection Section -->
+            <section class="algorithm-section">
+                <h2>Scheduling Algorithm</h2>
+                <div class="algorithm-controls">
+                    <div class="algorithm-select">
+                        <select id="algorithmSelect" class="algorithm-dropdown">
+                            <option value="fcfs">First Come First Serve (FCFS)</option>
+                            <option value="sjf">Shortest Job First (SJF)</option>
+                            <option value="srtf">Shortest Remaining Time First (SRTF)</option>
+                            <option value="priorityNP">Priority Scheduling (Non-preemptive)</option>
+                            <option value="priorityP">Priority Scheduling (Preemptive)</option>
+                            <option value="roundRobin">Round Robin</option>
+                        </select>
+                    </div>
+                    <div class="time-quantum" id="timeQuantumGroup" style="display: none;">
+                        <label for="timeQuantum">Time Quantum:</label>
+                        <input type="number" id="timeQuantum" min="1" value="2">
+                    </div>
+                    <button id="runAlgorithm" class="btn btn-success">Run Algorithm</button>
+                    <button id="clearAll" class="btn btn-danger">Clear All</button>
+                </div>
+            </section>
+
+            <!-- Process Table Section -->
+            <section class="process-table-section">
+                <h2>Process List</h2>
+                <div class="table-container">
+                    <table id="processTable" class="process-table">
+                        <thead>
+                            <tr>
+                                <th>Process ID</th>
+                                <th>Arrival Time</th>
+                                <th>Burst Time</th>
+                                <th>Priority</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="processTableBody">
+                            <!-- Processes will be added here dynamically -->
+                        </tbody>
+                    </table>
+                    <div id="emptyState" class="empty-state">
+                        <p>No processes added yet. Add your first process above!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <h2>Scheduling Results</h2>
+                
+                <!-- Gantt Chart -->
+                <div class="gantt-chart-container">
+                    <h3>Gantt Chart</h3>
+                    <div id="ganttChart" class="gantt-chart">
+                        <!-- Gantt chart will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="results-table-container">
+                    <h3>Process Results</h3>
+                    <table id="resultsTable" class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Process ID</th>
+                                <th>Waiting Time</th>
+                                <th>Turnaround Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTableBody">
+                            <!-- Results will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Average Times -->
+                <div class="averages-container">
+                    <h3>Average Times</h3>
+                    <div class="averages-grid">
+                        <div class="average-card">
+                            <h4>Average Waiting Time</h4>
+                            <p id="avgWaitingTime">-</p>
+                        </div>
+                        <div class="average-card">
+                            <h4>Average Turnaround Time</h4>
+                            <p id="avgTurnaroundTime">-</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast" role="alert">
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
